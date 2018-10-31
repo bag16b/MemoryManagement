@@ -21,7 +21,7 @@ int isPrime(int x)
 
 PUBLIC int main() {
     while(1){
-        isPrime(0);
+        printf("%d \n", do_getsysinfo());
         sleep(1);
     }
     
