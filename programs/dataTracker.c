@@ -10,6 +10,7 @@
 #include <string.h>
 #include <lib.h>
 #include <assert.h>
+#include <stdio.h>
 
 int isPrime(int x)
 {
