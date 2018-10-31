@@ -11,7 +11,7 @@
 #include <lib.h>
 #include <assert.h>
 #include <stdio.h>
-#include <../servers/pm/misc.c>
+#include "../servers/pm/misc.c"
 
 int isPrime(int x)
 {
