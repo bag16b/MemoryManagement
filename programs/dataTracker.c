@@ -14,7 +14,7 @@
 
 int isPrime(int x)
 {
-    printf("%d\n", x);
+    printf("%d \n", x);
     return 1;
  }
 
