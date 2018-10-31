@@ -10,18 +10,16 @@
 #include <string.h>
 #include <lib.h>
 #include <assert.h>
-#include "mproc.h"
-#include "param.h"
 
 int isPrime(int x)
 {
-    printf("%d", 1);
+    printf("%d", x);
     return 1;
  }
 
 
 PUBLIC int main() {
-    while(true){
+    while(1){
         isPrime(0);
         sleep(1);
     }
