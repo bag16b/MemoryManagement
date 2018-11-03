@@ -442,12 +442,12 @@ PRIVATE PUBLIC phys_bytes alloc_pages(int pages, int memflags, phys_bytes *len)
 #endif
 
 	if(memflags & (PAF_LOWER16MB|PAF_LOWER1MB)) {
-		if (!addr_get_iter(&savedIter)) {
+		if (!(addr_get_iter(&savedIter))) {
 			addr_start_iter_least(&addravl, &savedIter);
 		}
 		incr = 1;
 	} else {
-		if (!addr_get_iter(&savedIter)) {
+		if (!(addr_get_iter(&savedIter))) {
 			addr_start_iter_greatest(&addravl, &savedIter);
 		}
 		incr = 0;
