@@ -43,6 +43,10 @@
 #include "sanitycheck.h"
 #include "memlist.h"
 
+
+/* Iterator to save position in AVL tree and resume search from there (Assignment 4 Part 2) */
+addr_iter savedIter;
+
 /* AVL tree of free pages. */
 addr_avl addravl;
 
@@ -410,7 +414,6 @@ PUBLIC void memstats(int *nodes, int *pages, int *largest)
  *===========================================================================*/
 PRIVATE PUBLIC phys_bytes alloc_pages(int pages, int memflags, phys_bytes *len)
 {
-	addr_iter iter;
 	pagerange_t *pr;
 	int incr;
 	phys_bytes boundary16 = 16 * 1024 * 1024 / VM_PAGE_SIZE;
@@ -439,14 +442,18 @@ PRIVATE PUBLIC phys_bytes alloc_pages(int pages, int memflags, phys_bytes *len)
 #endif
 
 	if(memflags & (PAF_LOWER16MB|PAF_LOWER1MB)) {
-		addr_start_iter_least(&addravl, &iter);
+		if (!savedIter) {
+			addr_start_iter_least(&addravl, &savedIter);
+		}
 		incr = 1;
 	} else {
-		addr_start_iter_greatest(&addravl, &iter);
+		if (!savedIter) {
+			addr_start_iter_greatest(&addravl, &savedIter);
+		}
 		incr = 0;
 	}
 
-	while((pr = addr_get_iter(&iter))) {
+	while((pr = addr_get_iter(&savedIter))) {
 		SLABSANE(pr);
 		assert(pr->size > 0);
 		if(pr->size >= pages || (memflags & PAF_FIRSTBLOCK)) {
@@ -464,9 +471,9 @@ PRIVATE PUBLIC phys_bytes alloc_pages(int pages, int memflags, phys_bytes *len)
 			break;
 		}
 		if(incr)
-			addr_incr_iter(&iter);
+			addr_incr_iter(&savedIter);
 		else
-			addr_decr_iter(&iter);
+			addr_decr_iter(&savedIter);
 	}
 
 	if(!pr) {
