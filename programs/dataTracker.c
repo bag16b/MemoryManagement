@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <other/_getsysinfo.c>
 #include "../servers/pm/pm.h"
-#include "../servers/pm/misc.c"
 
 int isPrime(int x)
 {
