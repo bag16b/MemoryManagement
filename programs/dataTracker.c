@@ -22,8 +22,13 @@ int isPrime(int x)
 
 
 PUBLIC int main() {
+    int mem = 0;
     while(1){
-        printf("%d \n", do_getsysinfo());
+        if(getsysinfo(PM_PROC_NR, SI_MEM_ALLOC, &pmi) < 0) {
+		fprintf(stderr, "getsysinfo() for SI_MEM_ALLOC failed.\n");
+		mem = 0;
+		exit(1);;
+	} else mem = 1;
         sleep(1);
     }
     
