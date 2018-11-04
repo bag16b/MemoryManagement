@@ -23,6 +23,7 @@ int isPrime(int x)
 
 PUBLIC int main() {
     int mem = 0;
+    static struct pm_mem_info pmi;
     while(1){
         if(getsysinfo(PM_PROC_NR, SI_MEM_ALLOC, &pmi) < 0) {
 		fprintf(stderr, "getsysinfo() for SI_MEM_ALLOC failed.\n");
